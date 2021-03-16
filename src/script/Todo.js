@@ -57,16 +57,16 @@ export default class Todo {
 
     initList() {
         if (this.storage.length > 0) {
+            this.storage.forEach(item => {
+
+            });
+        } else {
             const emptyList = DOM.createElement("div", {
                 attrs: {
                     class: "emptyList"
                 },
                 text: "등록된 ToDo 아이템이 없습니다.",
                 parent: this.todoListBox
-            });
-        } else {
-            this.storage.forEach(item => {
-
             });
         }
 
