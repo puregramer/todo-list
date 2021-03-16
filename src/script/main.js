@@ -1,8 +1,8 @@
 
-window.addEventListener('DOMContentLoaded', (event) => {
+import Todo from "./Todo";
+import "../style/style.scss";
 
-    const appRoot = document.getElementById("appRoot");
-    appRoot.innerHTML = "hi";
-    console.log("appRoot: ", appRoot);
+window.addEventListener('DOMContentLoaded', (event) => {
+    const todoList = new Todo(document.getElementById("toDoList"));
 
 });
