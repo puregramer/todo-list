@@ -5,12 +5,10 @@ export default class Todo {
     constructor(target) {
         this.target = target;
         this.storage = new Storage("todoList");
-
+        this.list = this.storage.getStorage();
         console.log("Todo: ", this);
         this.init();
-        this.initList();
-
-        // Date.now()
+        this.renderList();
     }
 
     init() {
@@ -44,7 +42,7 @@ export default class Todo {
             text: "추가",
             parent: this.todoListBox
         });
-        this.addButton.addEventListener("click", this.addToDo);
+        this.addButton.addEventListener("click", this.addToDo.bind(this));
 
         this.deleteAllButton = DOM.createElement("button", {
             attrs: {
@@ -55,9 +53,9 @@ export default class Todo {
         });
     }
 
-    initList() {
-        if (this.storage.length > 0) {
-            this.storage.forEach(item => {
+    renderList() {
+        if (this.list.length > 0) {
+            this.list.forEach(item => {
 
             });
         } else {
@@ -69,13 +67,27 @@ export default class Todo {
                 parent: this.todoListBox
             });
         }
-
     }
 
     addToDo(e) {
         console.log(this.todoInput.value);
+        const input = this.todoInput.value;
+        if (input) {
+            this.insertTodo(input);
+        }
+    }
 
+    insertTodo(input) {
+        this.list.push({
+            id: Date.now(),
+            text: input
+        });
+        this.update();
+    }
 
+    update() {
+
+        this.storage.setItem(this.list);
     }
 
     delToDo() {
@@ -83,7 +95,9 @@ export default class Todo {
     }
 
     deleteAll() {
-
+        this.list = [];
     }
+
+
 
 }

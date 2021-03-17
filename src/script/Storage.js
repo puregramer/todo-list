@@ -11,9 +11,9 @@ export default class Storage {
         return this.storage;
     }
 
-    insert(item) {
+    /*insert(item) {
         this.storage.push(item);
-    }
+    }*/
 
     remove(id) {
         this.storage = this.storage.filter(item => item.id !== id);
