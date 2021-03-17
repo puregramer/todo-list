@@ -25,6 +25,11 @@ export default class Todo {
             },
             parent: this.todoListBox
         });
+        this.todoInput.addEventListener("keydown", (e) => {
+            if (e.keyCode === 13) {
+                this.addToDo();
+            }
+        });
 
         this.addButton = DOM.createElement("button", {
             attrs: {
