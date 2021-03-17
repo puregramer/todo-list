@@ -3,8 +3,6 @@ export default class Storage {
     constructor(name) {
         this.name = name;
         this.storage = JSON.parse(window.localStorage.getItem(this.name)) || [];
-
-        console.log("Storage: ", this);
     }
 
     getStorage() {

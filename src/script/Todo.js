@@ -6,7 +6,6 @@ export default class Todo {
         this.target = target;
         this.storage = new Storage("todoList");
         this.list = this.storage.getStorage();
-        console.log("Todo: ", this);
         this.init();
         this.renderList();
     }
