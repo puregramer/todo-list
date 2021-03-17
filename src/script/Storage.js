@@ -2,7 +2,7 @@
 export default class Storage {
     constructor(name) {
         this.name = name;
-        this.storage = window.localStorage.getItem(this.name) || [];
+        this.storage = JSON.parse(window.localStorage.getItem(this.name)) || [];
 
         console.log("Storage: ", this);
     }
@@ -11,16 +11,8 @@ export default class Storage {
         return this.storage;
     }
 
-    /*insert(item) {
-        this.storage.push(item);
-    }*/
-
-    remove(id) {
-        this.storage = this.storage.filter(item => item.id !== id);
-    }
-
     setItem(storage) {
-        window.localStorage.setItem(this.name, storage);
+        window.localStorage.setItem(this.name, JSON.stringify(storage));
     }
 
     clear() {

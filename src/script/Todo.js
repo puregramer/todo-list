@@ -21,19 +21,11 @@ export default class Todo {
 
         this.todoInput = DOM.createElement("input", {
             attrs: {
-                class: "todoInput"
+                class: "todoInput",
+                placeholder: "할 일을 입력해주세요."
             },
             parent: this.todoListBox
         });
-
-      /*  this.deleteButton = DOM.createElement("button", {
-            attrs: {
-                class: "deleteButton"
-            },
-            text: "삭제",
-            parent: this.todoListBox
-        });*/
-
 
         this.addButton = DOM.createElement("button", {
             attrs: {
@@ -44,19 +36,44 @@ export default class Todo {
         });
         this.addButton.addEventListener("click", this.addToDo.bind(this));
 
+        this.todoItemBox = DOM.createElement("div", {
+            attrs: {
+                class: "todoItemBox"
+            },
+            parent: this.todoListBox
+        });
+
         this.deleteAllButton = DOM.createElement("button", {
             attrs: {
-                class: "deleteAllButton"
+                class: "removeAllButton"
             },
             text: "전체삭제",
             parent: this.target
         });
+        this.deleteAllButton.addEventListener("click", this.removeAll.bind(this));
     }
 
     renderList() {
+        this.todoItemBox.innerHTML = "";
         if (this.list.length > 0) {
             this.list.forEach(item => {
-
+                const toDoItem = DOM.createElement("div", {
+                    attrs: {
+                        class: "toDoItem"
+                    },
+                    text: item.text,
+                    parent: this.todoItemBox
+                });
+                const removeButton = DOM.createElement("button", {
+                    attrs: {
+                        class: "removeButton"
+                    },
+                    text: "X",
+                    parent: toDoItem
+                });
+                removeButton.addEventListener("click", () => {
+                    this.removeTodo(item.id);
+                });
             });
         } else {
             const emptyList = DOM.createElement("div", {
@@ -64,7 +81,7 @@ export default class Todo {
                     class: "emptyList"
                 },
                 text: "등록된 ToDo 아이템이 없습니다.",
-                parent: this.todoListBox
+                parent: this.todoItemBox
             });
         }
     }
@@ -74,6 +91,7 @@ export default class Todo {
         const input = this.todoInput.value;
         if (input) {
             this.insertTodo(input);
+            this.todoInput.value = "";
         }
     }
 
@@ -86,18 +104,18 @@ export default class Todo {
     }
 
     update() {
-
         this.storage.setItem(this.list);
+        this.renderList();
     }
 
-    delToDo() {
-
+    removeTodo(id) {
+        this.list = this.list.filter(item => item.id !== id);
+        this.update();
     }
 
-    deleteAll() {
+    removeAll() {
         this.list = [];
+        this.update();
     }
-
-
 
 }
